@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Years of Us & Forever to Go</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* --- Typography & Basics --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #fff0f3;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .script-font {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* --- Sections Styling --- */
+        section {
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .section-hero {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+
+        .section-roadmap {
+            background-color: #fff;
+        }
+
+        .section-quiz {
+            background-color: #e3f2fd; /* Light Blue */
+        }
+
+        .section-letters {
+            background-color: #fff5e6; /* Vintage Paper */
+        }
+
+        .section-future {
+            background-color: #f3e5f5; /* Light Purple */
+        }
+
+        .section-proposal {
+            background: radial-gradient(circle, #ffebee 0%, #ffcdd2 100%);
+            min-height: 100vh;
+            text-align: center;
+        }
+
+       /* --- Roadmap Card Timeline Upgrade --- */
+        .timeline-item .card {
+            border-left: 5px solid #ff4d6d;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #fff0f3, #ffffff);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .timeline-item .card:hover {
+            transform: translateX(8px);
+            box-shadow: 0 15px 30px rgba(255,77,109,0.25);
+        }
+
+        .timeline-dot {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: bold;}
+
+
+        /* --- Letter Cards --- */
+        .letter-icon {
+            font-size: 4rem;
+            color: #d63384;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .letter-icon:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+
+        /* --- Photo Gallery --- */
+        .carousel-item img {
+            border-radius: 20px;
+            object-fit: cover;
+            height: 400px; /* Adjust height for mobile */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* --- Roadmap Timeline --- */
+        .timeline {
+            border-left: 4px solid #ff4d6d;
+            margin-left: 20px;
+            padding-left: 30px;
+            position: relative;
+        }
+        .timeline-item { margin-bottom: 40px; position: relative; }
+        .timeline-dot {
+            width: 20px; height: 20px; background: #ff4d6d; border-radius: 50%;
+            position: absolute; left: -42px; top: 5px;
+            box-shadow: 0 0 10px rgba(255,77,109,0.5);
+        }
+
+        /* --- Surprise Section (10 Reasons) --- */
+        .reason-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+            border: 2px dashed #ffb7b2;
+            height: 100%;
+        }
+        .reason-card:hover { transform: translateY(-5px); background-color: #ffebee; }
+        .reason-icon { font-size: 2rem; color: #ff4d6d; }
+
+
+
+        /* --- Quiz --- */
+        .quiz-btn {
+            margin: 10px;
+            border-radius: 30px;
+            padding: 10px 30px;
+            transition: 0.3s;
+        }
+
+        /* --- Proposal Elements --- */
+        .heart-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            transition: transform 0.2s;
+        }
+        
+        .heart-shape {
+            fill: #ff4d6d;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
+        }
+
+        .floating-balloon {
+            position: fixed;
+            bottom: -100px;
+            font-size: 3rem;
+            z-index: 9999;
+            opacity: 0;
+        }
+
+        /* --- Animations --- */
+        .pop-up-msg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 10000;
+            display: none;
+            text-align: center;
+        }
+
+        /* Overlay for Popups */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            display: none;
+        }
+        .card {
+    cursor: pointer;
+}
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }   
+
+
+    </style>
+</head>
+<body>
+
+    <section class="section-hero">
+        <div class="container">
+            <h1 class="display-1 script-font mb-4">Happy 10th Anniversary!</h1>
+            <p class="lead mb-4">Ten years of Laughter, Tears, and Angers.</p>
+            <div class="mt-4">
+                <i class="bi bi-arrow-down-circle-fill fs-1 animate-bounce"></i>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section-gallery bg-white">
+        <div class="container">
+            <h2 class="text-center mb-4 text-danger script-font">Our Best Moments</h2>
+            <div id="photoCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=2070&auto=format&fit=crop" class="d-block w-100" alt="Us">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Just Us</h5>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://images.unsplash.com/photo-1529634806980-85c3ddf8b903?q=80&w=2070&auto=format&fit=crop" class="d-block w-100" alt="Travel">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&w=1976&auto=format&fit=crop" class="d-block w-100" alt="Date">
+                    </div>
+
+                    <div class="carousel-item active">
+                        <img src="https://raw.githubusercontent.com/YOUR_USERNAME/valentine/main/images/pic1.jpg" class="d-block w-100">
+                    </div>
+                    
+                    <div class="carousel-item">
+                        <img src="https://raw.githubusercontent.com/YOUR_USERNAME/valentine/main/images/pic2.jpg" class="d-block w-100">
+                    </div>
+                    
+                    <div class="carousel-item">
+                        <img src="https://raw.githubusercontent.com/YOUR_USERNAME/valentine/main/images/pic3.jpg" class="d-block w-100">
+                    </div>
+                    
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#photoCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#photoCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                </button>
+            </div>
+            <p class="text-center text-muted mt-3"><small>Swipe to see more <i class="bi bi-arrow-right"></i></small></p>
+        </div>
+    </section>
+    <section class="section-roadmap">
+        <div class="container">
+            <h2 class="text-center mb-5 text-danger">Our 10 Year Journey & counting</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="timeline">
+    
+                        <div class="timeline-item">
+                            <div class="timeline-dot bg-pink text-white d-flex align-items-center justify-content-center">
+                                <i class="bi bi-heart-fill"></i>
+                            </div>
+                            <h4>2014 – The Beginning</h4>
+                            <div class="card shadow-sm border-0 p-3" style="background: linear-gradient(135deg, #ff9a9e, #fecfef);">
+                                <p>something magical started when I saw you first in my boring life.</p>
+                            </div>
+                        </div>
+    
+                        <div class="timeline-item">
+                            <div class="timeline-dot bg-orange text-white d-flex align-items-center justify-content-center">
+                                <i class="bi bi-emoji-smile"></i>
+                            </div>
+                            <h4>2017 – Growing Strong</h4>
+                            <div class="card shadow-sm border-0 p-3" style="background: linear-gradient(135deg, #fbc2eb, #a6c1ee);">
+                                <p>First date with Boro Boro promises,Understanding, trust, and endless late-night talks.</p>
+                            </div>
+                        </div>
+    
+                       
+    
+                        <div class="timeline-item">
+                            <div class="timeline-dot bg-teal text-white d-flex align-items-center justify-content-center">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <h4>2020 – Standing Together</h4>
+                            <div class="card shadow-sm border-0 p-3" style="background: linear-gradient(135deg, #cfd9df, #e2ebf0);">
+                                <p>No matter what life threw at us, we stayed.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot bg-purple text-white d-flex align-items-center justify-content-center">
+                                <i class="bi bi-gift"></i>
+                            </div>
+                            <h4>2021 – Half a Decade</h4>
+                            <div class="card shadow-sm border-0 p-3" style="background: linear-gradient(135deg, #fad0c4, #ffd1ff);">
+                                <p>5 years of love, fights, food, and memories.</p>
+                            </div>
+                        </div>
+    
+                        <div class="timeline-item">
+                            <div class="timeline-dot bg-red text-white d-flex align-items-center justify-content-center">
+                                <i class="bi bi-star-fill"></i>
+                            </div>
+                            <h4>2023 – Stronger Than Ever</h4>
+                            <div class="card shadow-sm border-0 p-3" style="background: linear-gradient(135deg, #ffecd2, #fcb69f);">
+                                <p>Love matured, hearts connected deeper.</p>
+                            </div>
+                        </div>
+    
+                        <div class="timeline-item">
+                            <div class="timeline-dot bg-green text-white d-flex align-items-center justify-content-center">
+                                <i class="bi bi-infinity"></i>
+                            </div>
+                            <h4>2026 – Forever Ahead</h4>
+                            <div class="card shadow-sm border-0 p-3" style="background: linear-gradient(135deg, #d4fc79, #96e6a1);">
+                                <p>This journey has no end—only chapters.</p>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="bg-light">
+        <div class="container pb-5">
+            <h2 class="text-center mb-5 script-font text-danger">10 Reasons Why I Love You</h2>
+            <div class="row g-3">
+                <div class="col-6 col-md-4" onclick="showPopup('Reason #1', 'Your smile makes my day, seriously.')">
+                    <div class="reason-card"><i class="bi bi-emoji-smile reason-icon"></i><br>Your Smile</div>
+                </div>
+                <div class="col-6 col-md-4" onclick="showPopup('Reason #2', 'The way you cook Mutton + Pollao is pure magic—it warms my heart every time.')">
+                    <div class="reason-card"><i class="bi bi-fire reason-icon"></i><br>Your Cooking</div>
+                </div>
+                
+                <div class="col-6 col-md-4" onclick="showPopup('Reason #3', 'You handle my madness perfectly.')">
+                    <div class="reason-card"><i class="bi bi-puzzle reason-icon"></i><br>My Patience</div>
+                </div>
+                <div class="col-6 col-md-4" onclick="showPopup('Reason #4', 'Your beautiful potol-chera eyes always mesmerize me.')">
+                    <div class="reason-card"><i class="bi bi-eye reason-icon"></i><br>Your Eyes</div>
+                </div>
+                
+                <div class="col-6 col-md-4" onclick="showPopup('Reason #5', 'How you always support my dreams and ideas.')">
+                    <div class="reason-card"><i class="bi bi-rocket reason-icon"></i><br>Support</div>
+                </div>
+                
+                <div class="col-6 col-md-4" onclick="showPopup('Reason #6', 'Simply because you are your amazing self.')">
+                    <div class="reason-card"><i class="bi bi-heart-fill reason-icon"></i><br>Everything</div>
+                </div>
+                <div class="col-6 col-md-4" onclick="showPopup('Reason #7', 'Your infectious laughter brightens my darkest days.')">
+                    <div class="reason-card"><i class="bi bi-emoji-laughing reason-icon"></i><br>Your Laughter</div>  
+                </div>
+                <div class="col-6 col-md-4" onclick="showPopup('Reason #8', 'Your hugs make everything feel perfect.')">
+                    <div class="reason-card">
+                        <i class="bi bi-hand-thumbs-up reason-icon"></i><br>Your Hugs
+                    </div>  
+                </div>
+                <div class="col-6 col-md-4" onclick="showPopup('Reason #9', 'Your sense of humor keeps our life full of joy.')">
+                    <div class="reason-card">
+                        <i class="bi bi-emoji-smile-upside-down reason-icon"></i><br>Your Humor
+                    </div>  
+                </div>
+                
+                <div class="col-6 col-md-4" onclick="showPopup('Reason #10', 'Your endless love makes every day special.')">
+                    <div class="reason-card">
+                        <i class="bi bi-heart-pulse reason-icon"></i><br>Your Love
+                    </div>  
+                </div>
+                
+                
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section-quiz">
+        <div class="container text-center">
+            <h2 class="mb-4 text-primary">Love Quiz 💖</h2>
+    
+            <div class="card p-4 shadow mx-auto" style="max-width: 500px;">
+                <h5 id="quiz-question"></h5>
+                <div id="quiz-options" class="d-grid gap-2 mt-3"></div>
+            </div>
+        </div>
+    </section>
+    
+
+    <section class="section-letters">
+        <div class="container text-center">
+            <h2 class="mb-5 script-font text-dark">Letters for My Beloved</h2>
+            <div class="row justify-content-center">
+                <div class="col-6 col-md-4 mb-4">
+                    <div class="letter-icon" onclick="openLetter('modal1')">
+                        <i class="bi bi-envelope-paper-heart-fill"></i>
+                        <p class="fs-6 text-muted mt-2">Open Me</p>
+                    </div>
+                </div>
+                 <div class="col-6 col-md-4 mb-4">
+                    <div class="letter-icon" onclick="openLetter('modal2')">
+                        <i class="bi bi-envelope-open-heart"></i>
+                        <p class="fs-6 text-muted mt-2">My Heart’s Words</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-future">
+        <div class="container">
+            <h2 class="text-center mb-5" style="color: #6a1b9a;">Future Plans</h2>
+            <div class="row text-center">
+                <div class="col-md-4 mb-3">
+                    <div class="card border-0 shadow h-100 p-4">
+                        <i class="bi bi-airplane-engines fs-1 text-primary mb-3"></i>
+                        <h5>World Tour</h5>
+                        <p class="text-muted">Just you and me.</p>
+
+                    </div>
+     
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card border-0 shadow h-100 p-4">
+                        <i class="bi bi-house-heart fs-1 text-danger mb-3"></i>
+                        <h5>Our Dream Journey</h5>
+                        <p class="text-muted">A cozy corner for us in the mighty World.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card border-0 shadow h-100 p-4">
+                        <i class="bi bi-emoji-smile fs-1 text-warning mb-3"></i>
+                        <h5>Growing Old</h5>
+                        <p class="text-muted">Together, forever.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-proposal d-flex flex-column justify-content-center align-items-center">
+        <div class="container text-center">
+            <h1 class="script-font display-3 text-danger mb-4">Will You Be My Valentine?</h1>
+            
+            <div id="heart-wrapper" class="heart-container mb-4">
+                <svg viewBox="0 0 32 29.6" class="heart-shape">
+                    <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+                    c6.1-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+                </svg>
+            </div>
+
+            <div id="proposal-buttons">
+                <button class="btn btn-lg btn-success rounded-pill px-5 mx-2" onclick="handleYes()">YES!</button>
+                <button class="btn btn-lg btn-outline-secondary rounded-pill px-5 mx-2" id="noBtn" onmouseover="handleNoHover()" onclick="handleNoClick()">NO</button>
+            </div>
+
+            <div id="love-meter-section" style="display: none;">
+                <h3 class="mt-4 script-font text-danger">Yay! She said YES! ❤️</h3>
+                <p class="fs-5">Now pour your love into the balloon and let it soar!</p>
+                <button class="btn btn-danger btn-lg rounded-pill shadow" onclick="addMoreLove()">
+                    <i class="bi bi-heart-fill"></i> Pour More Love
+                </button>
+            </div>
+            
+        </div>
+    </section>
+
+    <div class="modal fade" id="modal1" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background-color: #fff0f3;">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center pb-5">
+
+                    <h3 class="bengali-font text-danger">The Tale of Our Love</h3>
+                    <p class="mt-3 fs-5">
+                        Ten years passed in the blink of an eye,<br>
+                        Yet you remain the most beautiful sight I find.<br>
+                        Arguments, silence, love, and care,<br>
+                        Every return in life leads me back to you.<br>
+                        May all the coming days be spent by your side,<br>
+                        Hold my hand tightly as we walk ahead.<br>
+                        Because of you, my world is filled with colors,<br>
+                        Cheers to our love—today, tomorrow, forever.
+                    </p>                
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="modal2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background-color: #fff0f3;">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center pb-5">
+                    <h3 class="bengali-font text-danger">Confessions of the Heart</h3>
+                    <p class="mt-3 fs-5">
+                        I know I am not perfect, I stumble and fall,<br>
+                        Yet you chose to love me, accepting it all.<br>
+                        Through ten long years, you stood by my side,<br>
+                        Your smile alone makes my whole world shine.<br>
+                        I promise to walk with you all my life,<br>
+                        My heart beats stronger only for you.<br>
+                        Let’s travel countless roads together,<br>
+                        And turn every shared dream into reality.
+                    </p>
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+    <div class="pop-up-msg" id="customPopup">
+        <h4 id="popupTitle"></h4>
+        <p id="popupText"></p>
+        <button class="btn btn-sm btn-primary mt-2" onclick="closePopup()">Okay</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // --- QUIZ LOGIC ---
+        function correctAnswer(btn) {
+            btn.classList.remove('btn-outline-primary');
+            btn.classList.add('btn-success');
+            
+            // Confetti effect
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+            
+            showPopup("Correct! ❤️", "You know me so well! Love you!");
+        }
+
+        function wrongAnswer(btn) {
+            btn.classList.remove('btn-outline-primary');
+            btn.classList.add('btn-danger');
+            btn.innerText = "Try Again 😜";
+            anime({
+                targets: btn,
+                translateX: [0, -10, 10, -10, 10, 0],
+                duration: 500
+            });
+        }
+
+        // --- LETTERS ---
+        function openLetter(modalId) {
+            var myModal = new bootstrap.Modal(document.getElementById(modalId));
+            myModal.show();
+        }
+
+        // --- PROPOSAL NO BUTTON LOGIC ---
+        const noMessages = [
+            "You've been mine for 10 years, too late to say no!",
+            "Are you sure? Try the other button!",
+            "Error 404: 'No' option not found in your heart.",
+            "Don't be shy, click Yes! 😉"
+        ];
+
+        function handleNoHover() {
+            // Optional: Move button slightly on desktop
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * 50 - 25;
+            const y = Math.random() * 50 - 25;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function handleNoClick() {
+            const randomMsg = noMessages[Math.floor(Math.random() * noMessages.length)];
+            showPopup("Hey!", randomMsg);
+        }
+
+        // --- PROPOSAL YES LOGIC ---
+        function handleYes() {
+            document.getElementById('proposal-buttons').style.display = 'none';
+            document.getElementById('love-meter-section').style.display = 'block';
+            
+            // Animation for initial Yes
+            anime({
+                targets: '.heart-shape',
+                scale: [1, 1.2, 1],
+                duration: 1000,
+                easing: 'easeInOutQuad'
+            });
+            
+            showPopup("I Knew It! ❤️", "Now fill our love balloon!");
+        }
+
+        // --- ADD MORE LOVE LOGIC ---
+        let loveCount = 0;
+        let scale = 1;
+
+        function addMoreLove() {
+            loveCount++;
+            scale += 0.2;
+            
+            // Animate Heart Growth
+            anime({
+                targets: '#heart-wrapper',
+                scale: scale,
+                duration: 500,
+                easing: 'easeOutElastic(1, .8)'
+            });
+
+            // Change Color Intensity
+            const heart = document.querySelector('.heart-shape');
+            // Logic to make it "pinker" or "redder" not strictly needed as it is SVG fill,
+            // but we can add a glow.
+            heart.style.filter = `drop-shadow(0 0 ${10 + loveCount*5}px rgba(255, 77, 109, 0.8))`;
+
+            if (loveCount >= 5) {
+                flyAway();
+            }
+        }
+
+        function flyAway() {
+            // Hide the button
+            document.getElementById('love-meter-section').innerHTML = "<h2 class='text-danger script-font'>Our Love is Flying High! ❤️</h2>";
+            
+            // Animate Heart Flying Up
+            anime({
+                targets: '#heart-wrapper',
+                translateY: -1000,
+                opacity: 0,
+                duration: 3000,
+                easing: 'easeInExpo',
+                complete: function() {
+                    // Trigger massive confetti
+                    var duration = 3 * 1000;
+                    var animationEnd = Date.now() + duration;
+                    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+                    var interval = setInterval(function() {
+                        var timeLeft = animationEnd - Date.now();
+                        if (timeLeft <= 0) {
+                            return clearInterval(interval);
+                        }
+                        var particleCount = 50 * (timeLeft / duration);
+                        confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+                    }, 250);
+                }
+            });
+        }
+
+        // --- UTILITIES ---
+        function showPopup(title, text) {
+            document.getElementById('popupTitle').innerText = title;
+            document.getElementById('popupText').innerText = text;
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('customPopup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('customPopup').style.display = 'none';
+        }
+
+
+        const quizData = [
+            {
+                q: "Where was our first date?",
+                options: ["Mall", "Pukure Paar", "Baari"],
+                correct: 1
+            },
+            {
+                q: "What do I love most about you?",
+                options: ["Your Anger", "Your Eyes", "You in Saare"],
+                correct: 1
+            },
+            {
+                q: "Who says sorry first?",
+                options: ["You", "Me", "Depends 😜"],
+                correct: 2
+            },
+            {
+                q: "Our favorite food together?",
+                options: ["Momo", "Biryani", "Chowmein"],
+                correct: 1
+            },
+            {
+                q: "When did I fall for you?",
+                options: ["Slowly", "Day One", "Still Falling"],
+                correct: 2
+            }
+        ];
+
+        let currentQ = 0;
+
+        function loadQuiz() {
+            const q = quizData[currentQ];
+            document.getElementById("quiz-question").innerText = q.q;
+
+            const optionsDiv = document.getElementById("quiz-options");
+            optionsDiv.innerHTML = "";
+
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement("button");
+                btn.className = "btn btn-outline-primary quiz-btn";
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(index);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(index) {
+            if (index === quizData[currentQ].correct) {
+                confetti({ particleCount: 120, spread: 80 });
+                currentQ++;
+                if (currentQ < quizData.length) {
+                    setTimeout(loadQuiz, 800);
+                } else {
+                    document.querySelector(".section-quiz").innerHTML =
+                        "<h2 class='text-success script-font text-center'>Golu Molu Love 💕 </h2>";
+                }
+            } else {
+                showPopup("Oops 😜", "Abaar Try kor !");
+            }
+        }
+
+        loadQuiz();
+
+
+    </script>
+</body>
+</html>
