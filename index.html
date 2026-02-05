@@ -16,7 +16,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
-            background-color: #fff0f3;
+            background-color: #ffffff;
         }
 
         h1, h2, h3 {
@@ -40,7 +40,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: #fff;
+            color: #ffffff;
             border-bottom-left-radius: 50px;
             border-bottom-right-radius: 50px;
         }
@@ -151,7 +151,7 @@
         .heart-container {
             position: relative;
             width: 150px;
-            height: 150px;
+            height: 180px;
             margin: 0 auto;
             transition: transform 0.2s;
         }
@@ -203,25 +203,63 @@
             50% { transform: translateY(-15px); }
         }   
 
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent !important;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-rose {
+            background-image: linear-gradient(90deg, #ef549a, #ed2388, #f875a1);
+        }
+        .gradient-blush {
+            background-image: linear-gradient(90deg, #466bf1, #f65fc6);
+        }
+        .romance-title {
+            letter-spacing: 0.5px;
+            line-height: 1.1;
+            text-shadow: 0 2px 12px rgba(161, 59, 244, 0.25);
+        }
+        /* --- Ambient Hearts (Background) --- */
+        #ambient-hearts {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 50;
+        }
+        .ambient-heart {
+            position: absolute;
+            bottom: -40px;
+            font-size: 1.5rem;
+            color: #ff4d6d;
+            opacity: 0.85;
+            animation: floatUp 8s linear forwards;
+            filter: drop-shadow(0 2px 6px rgba(255,77,109,0.45));
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.2; }
+            20% { opacity: 0.7; }
+            100% { transform: translateY(-120vh) translateX(20px) rotate(20deg); opacity: 0; }
+        }
+
 
     </style>
 </head>
 <body>
+    <div id="ambient-hearts"></div>
 
     <section class="section-hero">
         <div class="container">
-            <h1 class="display-1 script-font mb-4">Happy 10th Anniversary!</h1>
+            <h1 class="display-1 script-font mb-4 gradient-text gradient-rose romance-title">Happy 10th Anniversary!</h1>
             <p class="lead mb-4">Ten years of Laughter, Tears, and Angers.</p>
-            <div class="mt-4">
-                <i class="bi bi-arrow-down-circle-fill fs-1 animate-bounce"></i>
-            </div>
         </div>
     </section>
 
 
 <section class="section-gallery bg-white">
     <div class="container">
-        <h2 class="text-center mb-4 text-danger script-font">Our Best Moments</h2>
+        <h2 class="text-center mb-4 text-danger script-font gradient-text gradient-blush romance-title">Our Best Moments</h2>
         <div id="photoCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
 
@@ -289,7 +327,7 @@
 
     <section class="section-roadmap">
         <div class="container">
-            <h2 class="text-center mb-5 text-danger">Our 10 Year Journey & counting</h2>
+            <h2 class="text-center mb-5 text-danger gradient-text gradient-blush romance-title">Our 10 Year Journey & counting</h2>
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="timeline">
@@ -364,7 +402,7 @@
     
     <section class="bg-light">
         <div class="container pb-5">
-            <h2 class="text-center mb-5 script-font text-danger">10 Reasons Why I Love You</h2>
+            <h2 class="text-center mb-5 script-font text-danger gradient-text gradient-blush romance-title">10 Reasons Why I Love You</h2>
             <div class="row g-3">
                 <div class="col-6 col-md-4" onclick="showPopup('Reason #1', 'Your smile makes my day, seriously.')">
                     <div class="reason-card"><i class="bi bi-emoji-smile reason-icon"></i><br>Your Smile</div>
@@ -415,7 +453,7 @@
 
     <section class="section-quiz">
         <div class="container text-center">
-            <h2 class="mb-4 text-primary">Love Quiz 💖</h2>
+            <h2 class="mb-4 text-primary text-dark gradient-text gradient-blush romance-title">Love Quiz</h2>
     
             <div class="card p-4 shadow mx-auto" style="max-width: 500px;">
                 <h5 id="quiz-question"></h5>
@@ -427,7 +465,7 @@
 
     <section class="section-letters">
         <div class="container text-center">
-            <h2 class="mb-5 script-font text-dark">Letters for My Beloved</h2>
+            <h2 class="mb-5 script-font text-dark gradient-text gradient-blush romance-title">Letters for My Beloved</h2>
             <div class="row justify-content-center">
                 <div class="col-6 col-md-4 mb-4">
                     <div class="letter-icon" onclick="openLetter('modal1')">
@@ -447,7 +485,7 @@
 
     <section class="section-future">
         <div class="container">
-            <h2 class="text-center mb-5" style="color: #6a1b9a;">Future Plans</h2>
+            <h2 class="text-center mb-5 script-font gradient-text gradient-blush romance-title">Future Plans</h2>
             <div class="row text-center">
                 <div class="col-md-4 mb-3">
                     <div class="card border-0 shadow h-100 p-4">
@@ -478,7 +516,7 @@
 
     <section class="section-proposal d-flex flex-column justify-content-center align-items-center">
         <div class="container text-center">
-            <h1 class="script-font display-3 text-danger mb-4">Will You Be My Valentine?</h1>
+            <h1 class="script-font display-3 text-danger mb-4 gradient-text gradient-rose romance-title">Will You Be My Valentine?</h1>
             
             <div id="heart-wrapper" class="heart-container mb-4">
                 <svg viewBox="0 0 32 29.6" class="heart-shape">
@@ -762,6 +800,69 @@
 
         loadQuiz();
 
+
+        // --- Ambient hearts: colorful flow + burst ---
+        (function () {
+            var container = document.getElementById('ambient-hearts');
+            if (!container) return;
+            var maxHearts = 24;
+            var current = 0;
+            var heartEmojis = ['💜','🤍','♥️','❤️','💞','💕','💛','🩷'];
+            var heartColors = ['#9c27b0','#ffffff','#ff1744','#ff4d6d','#9e9e9e','#ff80ab','#ffeb3b','#f48fb1'];
+
+            function burstAt(px, py) {
+                var ox = Math.min(Math.max(px / window.innerWidth, 0), 1);
+                var oy = Math.min(Math.max(py / window.innerHeight, 0), 1);
+                confetti({
+                    particleCount: 30,
+                    spread: 70,
+                    startVelocity: 25,
+                    ticks: 110,
+                    scalar: 0.9,
+                    colors: heartColors,
+                    origin: { x: ox, y: oy }
+                });
+            }
+
+            function spawnHeart(x) {
+                if (current >= maxHearts) return;
+                var span = document.createElement('span');
+                span.className = 'ambient-heart';
+                var idx = Math.floor(Math.random() * heartEmojis.length);
+                span.textContent = heartEmojis[idx];
+                var left = typeof x === 'number' ? x : Math.random() * window.innerWidth;
+                span.style.left = left + 'px';
+                span.style.fontSize = (Math.random() * 1.4 + 0.9) + 'rem';
+                span.style.color = heartColors[idx];
+                span.style.animationDuration = (6 + Math.random() * 4) + 's';
+                container.appendChild(span);
+                current++;
+                span.addEventListener('animationend', function () {
+                    var rect = span.getBoundingClientRect();
+                    burstAt(rect.left + rect.width / 2, Math.max(rect.top, 0) + rect.height / 2);
+                    if (span.parentNode) {
+                        container.removeChild(span);
+                        current--;
+                    }
+                });
+            }
+
+            // periodic hearts
+            setInterval(function () { spawnHeart(); }, 1000);
+
+            // hearts + burst on tap/click
+            window.addEventListener('click', function (e) {
+                spawnHeart(e.clientX);
+                burstAt(e.clientX, e.clientY);
+            });
+            window.addEventListener('touchstart', function (e) {
+                var touch = e.touches[0];
+                if (touch) {
+                    spawnHeart(touch.clientX);
+                    burstAt(touch.clientX, touch.clientY);
+                }
+            }, { passive: true });
+        })();
 
     </script>
 </body>
